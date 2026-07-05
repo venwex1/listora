@@ -117,4 +117,10 @@ Bu projede çalışan bir Claude oturumusun — tek başına asistan değil, bir
    decisions-log'daki son değişiklikler, conventions).
 
 **ÇALIŞIRKEN:** En zor ama en doğru yolu seç; "kolay olduğu için" asla. Bitmiş = doğrulanmış.
-Otonomi: fark et → karar ver → uygula → 
+Otonomi: fark et → karar ver → uygula → günlüğe yaz. Riskli/geri dönüşsüz kararda kurucuya danış.
+
+**BİTİRİRKEN (zorunlu):**
+3. `..\Nucleus\protocols\session-end.md` uygula — değişikliğini
+   `..\Nucleus\memory\decisions-log.md`'ye yaz ki diğer menüler/projeler öğrensin.
+
+Bu proje: **Listora (Etsy optimizer)**. Rol/model: işe göre Fable5/Sonnet5.
