@@ -1,0 +1,11 @@
+.env
+.env*.local
+.vercel
+*.log
+*.bak.*
+*.bak.nucleus-*
+*.bak.uifix.*
+index.html.bak.*
+landing.html.bak.*
+.listora_f5bot_seen.json
+__pycache__/

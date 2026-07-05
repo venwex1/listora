@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listora — AI Etsy Listing Optimizer That Outranks Competitors</title>
+<meta name="description" content="AI-powered Etsy SEO tool with real keyword data, competitor analysis, bulk optimization and listing audit. Outsell your competition on Etsy.">
+<style>
+:root{
+  --bg:#f8f7ff;--bg2:#f0eeff;--surface:#fff;--surface2:#f5f4fe;
+  --border:#e2dfff;--p:#1a1535;--p2:#4b4575;--muted:#6a6490;
+  --accent:#6c5ce7;--accent2:#a29bfe;
+  --teal:#00b894;--teal2:#00cec9;--rose:#e17055;--amber:#fdcb6e;--green:#00b894;
+  --grad:linear-gradient(135deg,#6c5ce7 0%,#a29bfe 50%,#fd79a8 100%);
+  --grad2:linear-gradient(135deg,#6c5ce7 0%,#a29bfe 100%);
+  --grad-teal:linear-gradient(135deg,#00b894,#00cec9);
+  --shadow:0 4px 24px rgba(108,92,231,.10);
+  --shadow-lg:0 8px 40px rgba(108,92,231,.18);
+  --radius:16px;--radius-sm:10px;
+  --trans:.22s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0e0c1a;--bg2:#13102a;--surface:#1a1635;--surface2:#211d3e;
+  --border:#2d2860;--p:#f0eeff;--p2:#c4bcff;--muted:#9490b5;
+  --accent:#a29bfe;--accent2:#6c5ce7;--teal:#00cec9;--teal2:#00b894;
+  --shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--p);transition:background var(--trans),color var(--trans);min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+/* HEADER */
+header{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 2px 12px rgba(108,92,231,.06)}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
+.logo{font-size:22px;font-weight:800;letter-spacing:-.5px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer}
+.header-actions{display:flex;align-items:center;gap:10px}
+.usage-badge{font-size:12px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:4px 12px;border-radius:20px;white-space:nowrap}
+.usage-badge span{color:var(--accent)}
+.btn-upgrade{font-size:13px;font-weight:700;padding:7px 18px;border-radius:20px;background:var(--grad);color:#fff;border:none;cursor:pointer;box-shadow:0 2px 12px rgba(108,92,231,.3);transition:opacity var(--trans),transform var(--trans);white-space:nowrap}
+.btn-upgrade:hover{opacity:.88;transform:translateY(-1px)}
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all var(--trans);color:var(--p);flex-shrink:0}
+.theme-btn:hover{background:var(--border)}
+/* LANDING HERO */
+.landing{background:radial-gradient(ellipse 90% 70% at 50% -10%,rgba(108,92,231,.14) 0%,transparent 65%);padding:80px 24px 64px;text-align:center;position:relative;overflow:hidden}
+[data-theme="dark"] .landing{background:radial-gradient(ellipse 90% 70% at 50% -10%,rgba(162,155,254,.08) 0%,transparent 65%)}
+.landing::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236c5ce7' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.landing-badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);padding:5px 16px;border-radius:20px;font-size:12px;font-weight:700;color:var(--accent);margin-bottom:24px;box-shadow:var(--shadow)}
+.landing h1{font-size:clamp(34px,5.5vw,58px);font-weight:900;letter-spacing:-2px;line-height:1.08;margin-bottom:20px}
+.landing h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.landing-sub{font-size:18px;color:var(--p2);max-width:580px;margin:0 auto 36px;line-height:1.65}
+.landing-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.btn-cta-primary{padding:14px 32px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(108,92,231,.35);transition:all var(--trans)}
+.btn-cta-primary:hover{transform:translateY(-2px);box-shadow:0 6px 32px rgba(108,92,231,.45)}
+.btn-cta-secondary{padding:14px 32px;border-radius:var(--radius-sm);background:var(--surface);color:var(--p);font-size:16px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;transition:all var(--trans)}
+.btn-cta-secondary:hover{border-color:var(--accent);color:var(--accent)}
+/* STATS BAR */
+.stats-bar{display:flex;justify-content:center;gap:0;flex-wrap:wrap;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);overflow:hidden;max-width:800px;margin:0 auto 56px}
+.stat-item{flex:1;min-width:140px;padding:20px 16px;text-align:center;border-right:1px solid var(--border);position:relative}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:28px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500}
+/* COMPARE TABLE */
+.compare-wrap{max-width:900px;margin:0 auto 64px;padding:0 24px}
+.compare-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+.compare-sub{text-align:center;color:var(--p2);margin-bottom:32px;font-size:15px}
+.compare-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.compare-table th{padding:14px 18px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;background:var(--surface2);border-bottom:1px solid var(--border);text-align:center}
+.compare-table th:first-child{text-align:left}
+.compare-table th.listora{background:rgba(108,92,231,.08);color:var(--accent)}
+.compare-table td{padding:12px 18px;border-bottom:1px solid var(--border);font-size:14px;text-align:center;vertical-align:middle}
+.compare-table td:first-child{text-align:left;font-weight:600;color:var(--p2)}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:hover td{background:var(--bg2)}
+.chk-yes{color:#00b894;font-size:18px;font-weight:700}
+.chk-no{color:var(--muted);font-size:18px}
+.chk-partial{color:var(--amber);font-size:14px;font-weight:600}
+.compare-table td.listora-col{background:rgba(108,92,231,.04)}
+/* HOW IT WORKS */
+.how-wrap{max-width:900px;margin:0 auto 64px;padding:0 24px;text-align:center}
+.how-title{font-size:28px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+.how-sub{color:var(--p2);margin-bottom:36px;font-size:15px}
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.how-step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 22px;text-align:left;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.how-step::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.how-step-num{font-size:36px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;line-height:1}
+.how-step h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.how-step p{font-size:13px;color:var(--p2);line-height:1.6}
+/* TESTIMONIALS */
+.testi-wrap{max-width:900px;margin:0 auto 64px;padding:0 24px}
+.testi-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:32px;letter-spacing:-.5px}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.testi-stars{color:#fdcb6e;font-size:14px;margin-bottom:10px}
+.testi-text{font-size:14px;color:var(--p2);line-height:1.65;margin-bottom:14px;font-style:italic}
+.testi-author{font-size:13px;font-weight:700;color:var(--p)}
+.testi-shop{font-size:12px;color:var(--muted)}
+/* PRICING SECTION */
+.pricing-wrap{max-width:700px;margin:0 auto 64px;padding:0 24px;text-align:center}
+.pricing-title{font-size:28px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+.pricing-sub{color:var(--p2);margin-bottom:36px;font-size:15px}
+.pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.pricing-cards{grid-template-columns:1fr}}
+.pricing-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;transition:all var(--trans);position:relative}
+.pricing-card.featured{border-color:var(--accent);box-shadow:0 0 0 4px rgba(108,92,231,.08)}
+.pricing-card.featured::before{content:'Most Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;white-space:nowrap}
+.pc-name{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.pc-price{font-size:42px;font-weight:900;color:var(--p);line-height:1}
+.pc-price span{font-size:16px;font-weight:500;color:var(--muted)}
+.pc-billing{font-size:12px;color:var(--muted);margin:4px 0 16px}
+.pc-features{list-style:none;text-align:left;margin-bottom:20px;display:flex;flex-direction:column;gap:8px}
+.pc-features li{font-size:13px;color:var(--p2);display:flex;gap:8px}
+.pc-features li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+.btn-plan{width:100%;padding:12px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all var(--trans)}
+.btn-plan-primary{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(108,92,231,.3)}
+.btn-plan-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-plan-secondary{background:var(--surface2);color:var(--p2);border:1.5px solid var(--border)}
+.btn-plan-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.guarantee{text-align:center;margin-top:20px;font-size:13px;color:var(--muted)}
+.guarantee strong{color:var(--teal)}
+/* DIVIDER */
+.section-divider{border:none;border-top:1px solid var(--border);margin:0}
+/* APP SECTION */
+.app-section{max-width:1200px;margin:0 auto;padding:0 24px 80px}
+.app-section-header{text-align:center;padding:56px 0 40px}
+.app-section-header h2{font-size:32px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+.app-section-header p{color:var(--p2);font-size:15px}
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:28px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:5px;box-shadow:var(--shadow);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-btn{flex:1;min-width:110px;padding:10px 14px;border-radius:10px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all var(--trans);white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:5px}
+.tab-btn:hover{color:var(--accent);background:var(--bg2)}
+.tab-btn.active{background:var(--grad);color:#fff;box-shadow:0 2px 12px rgba(108,92,231,.3)}
+.tab-badge{font-size:9px;font-weight:700;padding:2px 5px;border-radius:5px;background:rgba(255,255,255,.25);color:#fff;letter-spacing:.2px}
+.tab-btn:not(.active) .tab-badge{background:var(--accent);color:#fff}
+/* PANELS */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:18px;box-shadow:var(--shadow)}
+.card-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.two-col{grid-template-columns:1fr}}
+/* FORMS */
+label{display:block;font-size:13px;font-weight:600;color:var(--p2);margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px 13px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--bg);color:var(--p);font-size:14px;font-family:inherit;transition:border-color var(--trans),box-shadow var(--trans);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,92,231,.12)}
+textarea{resize:vertical;min-height:88px;line-height:1.5}
+.form-group{margin-bottom:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.char-count{font-size:12px;color:var(--muted);text-align:right;margin-top:3px}
+.char-count.warn{color:var(--rose)}
+/* BUTTONS */
+.btn-primary{width:100%;padding:13px 24px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(108,92,231,.3);transition:opacity var(--trans),transform var(--trans),box-shadow var(--trans);position:relative;overflow:hidden}
+.btn-primary:hover:not(:disabled){opacity:.9;transform:translateY(-1px);box-shadow:0 6px 28px rgba(108,92,231,.38)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-secondary{padding:8px 15px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface2);color:var(--p2);font-size:13px;font-weight:600;cursor:pointer;transition:all var(--trans)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+/* SPINNER */
+.spinner{display:none;width:18px;height:18px;margin:0 auto;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading .spinner{display:inline-block}
+.loading .btn-text{display:none}
+/* RESULTS */
+.results{display:none}
+.results.visible{display:block}
+.placeholder{text-align:center;padding:52px 24px;color:var(--muted)}
+.placeholder-icon{font-size:38px;margin-bottom:10px;opacity:.35}
+.placeholder p{font-size:14px;line-height:1.6}
+/* TITLE VARIANTS */
+.variants-grid{display:flex;flex-direction:column;gap:10px}
+.variant-card{border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;cursor:pointer;transition:all var(--trans);background:var(--surface2)}
+.variant-card:hover{border-color:var(--accent);background:var(--bg2)}
+.variant-card.selected{border-color:var(--accent);background:var(--bg2);box-shadow:0 0 0 3px rgba(108,92,231,.1)}
+.variant-meta{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap}
+.variant-num{font-size:12px;font-weight:700;color:var(--muted)}
+.variant-angle{font-size:12px;font-weight:700;color:var(--accent);background:rgba(108,92,231,.1);padding:2px 7px;border-radius:5px}
+.variant-strength{font-size:12px;font-weight:700;color:var(--teal);background:rgba(0,184,148,.1);padding:2px 7px;border-radius:5px;margin-left:auto}
+.variant-text{font-size:13px;color:var(--p);line-height:1.45;font-weight:500}
+.variant-len{font-size:12px;color:var(--muted);margin-top:5px}
+.copy-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:12px;font-weight:600;color:var(--p2);transition:all var(--trans);margin-top:7px}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.copy-btn.copied{border-color:var(--teal);color:var(--teal)}
+.section-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin:16px 0 8px}
+.desc-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:13px;color:var(--p);line-height:1.7;white-space:pre-wrap}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;font-weight:600;padding:4px 10px;border-radius:18px;background:var(--surface2);border:1px solid var(--border);color:var(--p2)}
+.tag.teal{background:rgba(0,184,148,.1);border-color:var(--teal);color:var(--teal)}
+.tag.accent{background:rgba(108,92,231,.1);border-color:var(--accent);color:var(--accent)}
+.tag.amber{background:rgba(253,203,110,.15);border-color:var(--amber);color:#b8860b}
+.tag.verified{background:rgba(0,184,148,.12);border-color:var(--teal);color:var(--teal)}
+.tag.verified::before{content:'✓ '}
+/* DATA BADGE */
+.data-badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;background:rgba(0,184,148,.12);color:var(--teal);border:1px solid rgba(0,184,148,.3)}
+.vol-bar-wrap{display:flex;align-items:center;gap:8px}
+.vol-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.vol-bar-fill{height:100%;border-radius:2px;background:var(--grad2);transition:width .8s ease}
+/* AUDIT */
+.score-ring-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:20px}
+.score-ring{position:relative;width:110px;height:110px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-num{font-size:28px;font-weight:900;color:var(--p)}
+.score-label{font-size:12px;color:var(--muted);font-weight:600}
+.grade-badge{font-size:32px;font-weight:900;width:54px;height:54px;display:flex;align-items:center;justify-content:center;border-radius:10px;box-shadow:var(--shadow)}
+.sub-scores{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.sub-score{text-align:center;padding:10px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)}
+.sub-score-val{font-size:20px;font-weight:800}
+.sub-score-label{font-size:12px;color:var(--muted);margin-top:2px}
+.issues-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.issue-item{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);border-left:3px solid var(--rose);font-size:12px;color:var(--p2);line-height:1.5}
+/* COMPETE */
+.dominance-badge{display:flex;flex-direction:column;align-items:center;padding:18px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);text-align:center;margin-bottom:16px}
+.dom-score-num{font-size:48px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.dom-bar{width:100%;height:7px;background:var(--border);border-radius:4px;margin:10px 0;overflow:hidden}
+.dom-bar-fill{height:100%;border-radius:4px;background:var(--grad);transition:width 1s cubic-bezier(.4,0,.2,1)}
+.dom-score-sub{font-size:12px;color:var(--muted)}
+.gap-analysis{font-size:13px;color:var(--p2);line-height:1.7;padding:14px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)}
+/* KEYWORD RESEARCH */
+.kw-search-bar{display:flex;gap:10px;margin-bottom:20px}
+.kw-search-bar input{flex:1}
+.btn-search{padding:10px 20px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:opacity var(--trans);white-space:nowrap}
+.btn-search:hover{opacity:.88}
+.btn-search:disabled{opacity:.5;cursor:not-allowed}
+.kw-table{width:100%;border-collapse:collapse}
+.kw-table th{padding:9px 12px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);text-align:left;background:var(--surface2)}
+.kw-table td{padding:9px 12px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+.kw-table tr:last-child td{border-bottom:none}
+.kw-table tr:hover td{background:var(--bg2)}
+.kw-keyword{font-weight:600;color:var(--p)}
+.vol-pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px}
+.vol-high{background:rgba(0,184,148,.12);color:var(--teal)}
+.vol-med{background:rgba(108,92,231,.1);color:var(--accent)}
+.vol-low{background:var(--surface2);color:var(--muted)}
+.comp-pill{font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px}
+.comp-high{background:rgba(225,112,85,.1);color:var(--rose)}
+.comp-med{background:rgba(253,203,110,.15);color:#b8860b}
+.comp-low{background:rgba(0,184,148,.1);color:var(--teal)}
+.trend-up{color:var(--teal);font-size:13px;font-weight:700}
+.trend-stable{color:var(--muted);font-size:13px}
+.trend-down{color:var(--rose);font-size:13px}
+.opp-badge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px}
+.opp-high{background:rgba(0,184,148,.15);color:var(--teal)}
+.opp-med{background:rgba(108,92,231,.1);color:var(--accent)}
+.opp-low{background:var(--surface2);color:var(--muted)}
+.btn-use{font-size:12px;padding:4px 9px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--p2);transition:all var(--trans);white-space:nowrap}
+.btn-use:hover{border-color:var(--accent);color:var(--accent)}
+.insight-box{background:linear-gradient(135deg,rgba(108,92,231,.06),rgba(162,155,254,.06));border:1px solid rgba(108,92,231,.2);border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--p2);line-height:1.65;margin-bottom:16px}
+.insight-box strong{color:var(--accent)}
+.trending-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.trending-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 15px;transition:all var(--trans)}
+.trending-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+.trending-kw{font-size:14px;font-weight:700;color:var(--p);margin-bottom:5px}
+.trending-meta{display:flex;align-items:center;justify-content:space-between}
+.trending-score{font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.trend-label{font-size:12px;font-weight:600}
+.seasonal-list{display:flex;flex-direction:column;gap:10px}
+.seasonal-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);transition:all var(--trans)}
+.seasonal-item:hover{border-color:var(--accent)}
+.seasonal-event{font-size:20px}
+.seasonal-kw{font-size:14px;font-weight:700;color:var(--p)}
+.seasonal-detail{font-size:12px;color:var(--muted);margin-top:2px}
+.urgency-badge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;margin-left:auto;white-space:nowrap}
+.urgency-now{background:rgba(225,112,85,.12);color:var(--rose)}
+.urgency-soon{background:rgba(253,203,110,.15);color:#b8860b}
+.urgency-later{background:rgba(0,184,148,.1);color:var(--teal)}
+/* BULK */
+.product-list{display:flex;flex-direction:column;gap:10px}
+.product-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px}
+.product-item-header{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.product-num{font-size:12px;font-weight:700;color:var(--muted);background:var(--border);padding:2px 7px;border-radius:5px}
+.btn-remove{margin-left:auto;width:24px;height:24px;border-radius:50%;border:none;background:rgba(225,112,85,.12);color:var(--rose);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all var(--trans)}
+.btn-remove:hover{background:rgba(225,112,85,.25)}
+.btn-add-product{width:100%;padding:9px;border-radius:var(--radius-sm);border:1.5px dashed var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all var(--trans);margin-top:7px}
+.btn-add-product:hover{border-color:var(--accent);color:var(--accent);background:var(--bg2)}
+.bulk-progress{margin-bottom:14px}
+.bulk-progress-bar{width:100%;height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:5px}
+.bulk-progress-fill{height:100%;border-radius:3px;background:var(--grad);transition:width .4s ease}
+.bulk-progress-text{font-size:12px;color:var(--muted)}
+.bulk-card{border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;transition:border-color var(--trans)}
+.bulk-card.done{border-color:var(--teal)}
+.bulk-card.error{border-color:var(--rose)}
+.bulk-card.processing{border-color:var(--accent)}
+.bulk-card-header{display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--surface2);cursor:pointer;user-select:none}
+.bulk-card-status{font-size:15px;flex-shrink:0}
+.bulk-card-name{font-size:13px;font-weight:600;color:var(--p);flex:1}
+.bulk-card-toggle{font-size:12px;color:var(--muted)}
+.bulk-card-body{display:none;padding:14px;border-top:1px solid var(--border)}
+.bulk-card-body.open{display:block}
+.bulk-title-text{font-size:13px;font-weight:600;color:var(--p);line-height:1.4;margin-bottom:9px;padding:9px 11px;background:var(--bg2);border-radius:7px}
+/* PAYWALL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:460px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.25);animation:slideUp .25s ease;position:relative}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{text-align:center;margin-bottom:22px}
+.modal-icon{font-size:32px;margin-bottom:8px}
+.modal-title{font-size:20px;font-weight:800;color:var(--p);margin-bottom:5px}
+.modal-sub{font-size:13px;color:var(--p2)}
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.plan{border:2px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center;cursor:pointer;transition:all var(--trans)}
+.plan:hover{border-color:var(--accent)}
+.plan.featured{border-color:var(--accent);background:rgba(108,92,231,.04)}
+.plan-name{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:3px}
+.plan-price{font-size:26px;font-weight:900;color:var(--p)}
+.plan-price span{font-size:13px;font-weight:500;color:var(--muted)}
+.plan-feat{font-size:12px;color:var(--p2);margin-top:5px;line-height:1.5}
+.modal-guarantee{text-align:center;font-size:12px;color:var(--muted);margin-bottom:14px}
+.modal-guarantee strong{color:var(--teal)}
+.modal-close{width:100%;padding:9px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;cursor:pointer}
+.modal-close:hover{color:var(--p)}
+/* EMAIL CAPTURE MODAL */
+.email-modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:420px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.25);animation:slideUp .25s ease}
+.email-modal h2{font-size:22px;font-weight:800;margin-bottom:8px;text-align:center}
+.email-modal p{font-size:14px;color:var(--p2);text-align:center;margin-bottom:20px;line-height:1.6}
+.email-input-wrap{display:flex;gap:8px;margin-bottom:10px}
+.email-input-wrap input{flex:1}
+.btn-email-submit{padding:10px 18px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;transition:opacity var(--trans)}
+.btn-email-submit:hover{opacity:.88}
+.email-skip{display:block;text-align:center;font-size:12px;color:var(--muted);cursor:pointer;margin-top:6px}
+.email-skip:hover{color:var(--accent)}
+/* ERROR */
+.error-box{background:rgba(225,112,85,.1);border:1px solid rgba(225,112,85,.3);border-radius:var(--radius-sm);padding:12px 14px;color:var(--rose);font-size:13px;display:none;margin-top:12px}
+.error-box.visible{display:block}
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-logo{font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.footer-links a{font-size:13px;color:var(--muted);transition:color var(--trans)}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{font-size:12px;color:var(--muted)}
+/* FLEX UTILS */
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.flex-center{display:flex;align-items:center;justify-content:center}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}
+.gap-8{gap:8px}
+.bulk-results{display:flex;flex-direction:column;gap:8px}
+.copy-all-btn{padding:8px 16px;border-radius:var(--radius-sm);background:var(--surface2);border:1.5px solid var(--border);color:var(--p2);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--trans)}
+.copy-all-btn:hover{border-color:var(--teal);color:var(--teal)}
+.data-source-note{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-bottom:14px}
+.source-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);display:inline-block}
+
+/* ─── DYNAMIC DESIGN ENHANCEMENTS ──────────────────────────────────────────── */
+
+/* Animated gradient headline */
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.landing h1 .grad-animate{
+  background:linear-gradient(90deg,#6c5ce7,#a29bfe,#fd79a8,#a29bfe,#6c5ce7);
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:gradShift 4s linear infinite;
+}
+
+/* Floating orbs */
+.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;animation:float 8s ease-in-out infinite}
+.orb1{width:480px;height:480px;top:-120px;left:-80px;background:radial-gradient(circle,rgba(108,92,231,.22),transparent 70%);filter:blur(60px);animation-delay:0s}
+.orb2{width:380px;height:380px;top:60px;right:-60px;background:radial-gradient(circle,rgba(162,155,254,.18),transparent 70%);filter:blur(60px);animation-delay:-3s}
+.orb3{width:280px;height:280px;bottom:-40px;left:40%;background:radial-gradient(circle,rgba(253,121,168,.12),transparent 70%);filter:blur(50px);animation-delay:-5s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-22px) scale(1.04)}}
+
+/* Particle canvas */
+#particles{position:absolute;inset:0;z-index:0;pointer-events:none}
+.landing>*:not(#particles):not(.orb){position:relative;z-index:1}
+
+/* 3D floating mockup card */
+.mock-wrap{margin:0 auto 40px;max-width:480px;perspective:1200px}
+.mock-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 20px;box-shadow:0 24px 60px rgba(108,92,231,.22),0 4px 16px rgba(0,0,0,.08);
+  transform:perspective(1000px) rotateY(-8deg) rotateX(4deg) scale(0.96);
+  transition:transform .55s cubic-bezier(.4,0,.2,1),box-shadow .55s ease;
+  animation:cardEntrance .8s cubic-bezier(.4,0,.2,1) forwards;
+  opacity:0;
+  text-align:left;
+}
+.mock-card:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1);box-shadow:0 32px 80px rgba(108,92,231,.3)}
+@keyframes cardEntrance{0%{opacity:0;transform:perspective(1000px) rotateY(-12deg) rotateX(6deg) scale(0.94) translateY(18px)}100%{opacity:1;transform:perspective(1000px) rotateY(-8deg) rotateX(4deg) scale(0.96) translateY(0)}}
+.mock-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.mock-title{font-size:13px;font-weight:700;color:var(--p);line-height:1.45;margin-bottom:10px;padding:10px 12px;background:rgba(108,92,231,.07);border-radius:8px;border-left:3px solid var(--accent)}
+.mock-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.mock-tag{font-size:12px;font-weight:600;padding:3px 9px;border-radius:14px;background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.2);color:var(--accent)}
+.mock-score{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--teal)}
+.mock-score-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.mock-score-fill{height:100%;width:94%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:3px;animation:barGrow 1.2s 1s ease both}
+@keyframes barGrow{from{width:0}to{width:94%}}
+.mock-badge{font-size:12px;font-weight:700;padding:2px 8px;border-radius:5px;background:rgba(0,184,148,.12);color:var(--teal);border:1px solid rgba(0,184,148,.25)}
+
+/* Glassmorphism cards (dark mode primary) */
+[data-theme="dark"] .how-step,
+[data-theme="dark"] .testi-card,
+[data-theme="dark"] .pricing-card{
+  background:rgba(26,22,53,.7);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(108,92,231,.18);
+}
+.how-step,.testi-card,.pricing-card{transition:transform .3s ease,box-shadow .3s ease}
+.how-step:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(108,92,231,.15)}
+.testi-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(108,92,231,.12)}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Button pulse glow */
+@keyframes btnPulse{0%{box-shadow:0 4px 24px rgba(108,92,231,.35),0 0 0 0 rgba(108,92,231,.3)}70%{box-shadow:0 4px 24px rgba(108,92,231,.35),0 0 0 10px rgba(108,92,231,0)}100%{box-shadow:0 4px 24px rgba(108,92,231,.35),0 0 0 0 rgba(108,92,231,0)}}
+.btn-cta-primary{animation:btnPulse 2.5s infinite}
+.btn-cta-primary:hover{animation:none}
+
+/* Ripple */
+.ripple-wrap{position:relative;overflow:hidden}
+.ripple-wave{position:absolute;border-radius:50%;background:rgba(255,255,255,.28);transform:scale(0);animation:rippleOut .55s linear;pointer-events:none}
+@keyframes rippleOut{to{transform:scale(4);opacity:0}}
+
+/* Input focus glow */
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(108,92,231,.14),0 1px 3px rgba(108,92,231,.08)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo" onclick="scrollToApp()">✦ Listora</div>
+    <div class="header-actions">
+      <div class="usage-badge"><span id="usageLeft">7</span> free uses left</div>
+      <button class="btn-upgrade" onclick="showPaywall()">Upgrade ✦</button>
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    </div>
+  </div>
+</header>
+
+<!-- LANDING SECTION -->
+<section class="landing" id="landing">
+  <canvas id="particles"></canvas>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="landing-badge">✦ AI-Powered · Keyword Intelligence · Competitor Analysis</div>
+  <h1>The Etsy SEO Tool That<br><span class="grad-animate">Outranks Everyone.</span></h1>
+  <p class="landing-sub">AI-generated listings backed by real keyword data. Audit your shop, crush competitors, and scale with bulk tools — all in one place.</p>
+  <div class="landing-cta">
+    <button class="btn-cta-primary ripple-wrap" onclick="scrollToApp()">Start Optimizing Free →</button>
+    <button class="btn-cta-secondary" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">See How We Compare</button>
+  </div>
+  <!-- 3D floating mockup card -->
+  <div class="mock-wrap">
+    <div class="mock-card">
+      <div class="mock-label">✦ AI-Optimized Listing Preview</div>
+      <div class="mock-title">Dainty Gold Ring for Women · Minimalist Stackable Band · Birthday Gift for Her · 14K Gold Filled · Delicate Jewelry</div>
+      <div class="mock-label" style="margin-top:6px">Etsy Tags (13)</div>
+      <div class="mock-tags">
+        <span class="mock-tag">dainty gold ring</span>
+        <span class="mock-tag">stackable band</span>
+        <span class="mock-tag">minimalist jewelry</span>
+        <span class="mock-tag">gift for her</span>
+        <span class="mock-tag">birthday gift</span>
+        <span class="mock-tag">14k gold filled</span>
+        <span class="mock-tag">delicate ring</span>
+      </div>
+      <div class="mock-score">
+        <span class="mock-badge">SEO Score</span>
+        <div class="mock-score-bar"><div class="mock-score-fill"></div></div>
+        <span>94 / 100</span>
+      </div>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-item reveal"><div class="stat-num" data-count="5">5</div><div class="stat-label">Powerful Tools</div></div>
+    <div class="stat-item reveal"><div class="stat-num" data-count="140">140</div><div class="stat-label">Char Titles</div></div>
+    <div class="stat-item reveal"><div class="stat-num" data-count="13">13</div><div class="stat-label">Optimized Tags</div></div>
+    <div class="stat-item reveal"><div class="stat-num">Real</div><div class="stat-label">Keyword Data</div></div>
+    <div class="stat-item reveal"><div class="stat-num">20×</div><div class="stat-label">Bulk Listings</div></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-wrap">
+  <h2 class="how-title">How Listora Works</h2>
+  <p class="how-sub">From product idea to fully-optimized Etsy listing in under 60 seconds</p>
+  <div class="how-steps">
+    <div class="how-step reveal">
+      <div class="how-step-num">01</div>
+      <h3>Research Keywords</h3>
+      <p>Enter your product niche and get real keyword data — volume estimates, competition scores, trending tags, and seasonal opportunities.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-step-num">02</div>
+      <h3>Generate Listings</h3>
+      <p>Our AI writes 3 title variants, a 300+ word description, and 13 validated tags — all engineered to rank and convert.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-step-num">03</div>
+      <h3>Audit & Score</h3>
+      <p>Paste any existing listing and get an instant A+ SEO score with specific issues flagged and a fully improved version.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="how-step-num">04</div>
+      <h3>Crush Competitors</h3>
+      <p>Paste a competitor's title and tags. We analyze their keyword gaps and generate a listing designed to outrank them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare-wrap" id="compare">
+  <h2 class="compare-title">Why Listora Wins</h2>
+  <p class="compare-sub">See how we stack up against the top Etsy SEO tools</p>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="min-width:200px">Feature</th>
+        <th class="listora">✦ Listora</th>
+        <th>eRank</th>
+        <th>Marmalead</th>
+        <th>Alura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>AI Listing Generator</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-partial">Basic</span></td></tr>
+      <tr><td>3 Title Variants per Generate</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td></tr>
+      <tr><td>Keyword Research</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-yes">✓</span></td><td><span class="chk-yes">✓</span></td><td><span class="chk-yes">✓</span></td></tr>
+      <tr><td>Listing SEO Audit & Score</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-yes">✓</span></td><td><span class="chk-partial">Partial</span></td><td><span class="chk-yes">✓</span></td></tr>
+      <tr><td>Competitor Gap Analysis</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-partial">Basic</span></td></tr>
+      <tr><td>Bulk Optimizer (20 listings)</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td></tr>
+      <tr><td>Seasonal Trend Alerts</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-yes">✓</span></td><td><span class="chk-partial">Partial</span></td><td><span class="chk-no">✗</span></td></tr>
+      <tr><td>300+ Word AI Description</td><td class="listora-col"><span class="chk-yes">✓</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-no">✗</span></td><td><span class="chk-partial">Short</span></td></tr>
+      <tr><td>Price / month</td><td class="listora-col" style="font-weight:700;color:var(--teal)">from $9</td><td style="color:var(--muted)">$9.99</td><td style="color:var(--muted)">$19</td><td style="color:var(--muted)">$19.99</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-wrap">
+  <h2 class="testi-title">Sellers Love Listora</h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I optimized 15 listings in one afternoon using the Bulk tool. My shop views went up 60% in the first week. Nothing else comes close."</p>
+      <div class="testi-author">Sarah M.</div>
+      <div class="testi-shop">HandmadeByMara · Jewelry & Accessories</div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The Compete feature is insane. I pasted my top competitor's title and Listora built me a listing that literally outranked them within 2 weeks."</p>
+      <div class="testi-author">James K.</div>
+      <div class="testi-shop">WoodcraftStudio · Home & Living</div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"eRank gives me data but I never knew what to do with it. Listora takes the data and actually writes the listing. That's the missing piece."</p>
+      <div class="testi-author">Priya D.</div>
+      <div class="testi-shop">ThreadsOfJoy · Clothing & Shoes</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-wrap" id="pricing">
+  <h2 class="pricing-title">Simple, Honest Pricing</h2>
+  <p class="pricing-sub">Start free. Upgrade when you're ready. Cancel anytime.</p>
+  <div class="pricing-cards">
+    <div class="pricing-card">
+      <div class="pc-name">Starter</div>
+      <div class="pc-price">$9<span>/mo</span></div>
+      <div class="pc-billing">billed monthly</div>
+      <ul class="pc-features">
+        <li>Unlimited Generate, Audit, Compete</li>
+        <li>Keyword Research tool</li>
+        <li>50 Bulk listings/month</li>
+        <li>Seasonal trend alerts</li>
+        <li>Email support</li>
+      </ul>
+      <button class="btn-plan btn-plan-secondary" onclick="handleUpgrade('starter')">Get Started</button>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pc-name">✦ Pro</div>
+      <div class="pc-price">$19<span>/mo</span></div>
+      <div class="pc-billing">billed monthly</div>
+      <ul class="pc-features">
+        <li>Everything in Starter</li>
+        <li>Unlimited Bulk (20/run)</li>
+        <li>Priority AI (faster responses)</li>
+        <li>CSV export all listings</li>
+        <li>Competitor tracking</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="btn-plan btn-plan-primary" onclick="handleUpgrade('pro')">Get Pro →</button>
+    </div>
+  </div>
+  <div class="guarantee">🛡️ <strong>30-day money-back guarantee.</strong> Not happy? Full refund, no questions.</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- APP SECTION -->
+<section class="app-section" id="app">
+  <div class="app-section-header">
+    <h2>Your Listing Optimizer</h2>
+    <p>7 free uses to try every feature — no credit card needed</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('generate')" id="tab-generate">✦ Generate</button>
+    <button class="tab-btn" onclick="switchTab('research')" id="tab-research">🔍 Research</button>
+    <button class="tab-btn" onclick="switchTab('audit')" id="tab-audit">📊 Audit</button>
+    <button class="tab-btn" onclick="switchTab('compete')" id="tab-compete">⚔️ Compete</button>
+    <button class="tab-btn" onclick="switchTab('bulk')" id="tab-bulk">⚡ Bulk <span class="tab-badge">Pro</span></button>
+  </div>
+
+  <!-- ─── GENERATE ─── -->
+  <div class="tab-panel active" id="panel-generate">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Product Details</div>
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="g-name" placeholder="e.g. Handmade Ceramic Mug" oninput="updateCharCount('g-name','g-name-c',60)">
+          <div class="char-count"><span id="g-name-c">0</span>/60</div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="g-cat"><option value="">Select category</option></select>
+        </div>
+        <div class="form-group">
+          <label>Key Features & Materials *</label>
+          <textarea id="g-feat" rows="3" placeholder="hand-thrown, food-safe glaze, 12oz, dishwasher safe, speckled finish" oninput="updateCharCount('g-feat','g-feat-c',300)"></textarea>
+          <div class="char-count"><span id="g-feat-c">0</span>/300</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Target Audience</label>
+            <input type="text" id="g-aud" placeholder="coffee lovers, gift for mom">
+          </div>
+          <div class="form-group">
+            <label>Occasion / Use</label>
+            <input type="text" id="g-occ" placeholder="birthday gift, everyday use">
+          </div>
+        </div>
+        <button class="btn-primary" id="g-btn" onclick="runG()">
+          <span class="btn-text">✦ Generate Optimized Listing</span>
+          <span class="spinner"></span>
+        </button>
+        <div class="error-box" id="g-err"></div>
+      </div>
+      <div>
+        <div class="placeholder" id="g-ph"><div class="placeholder-icon">✦</div><p>Fill in product details and click Generate to get AI-optimized titles, descriptions, and data-backed tags.</p></div>
+        <div class="results" id="g-res">
+          <div class="card">
+            <div class="flex-between" style="margin-bottom:12px">
+              <div class="card-title" style="margin:0">Title Variants</div>
+              <div class="data-badge" id="g-data-badge">✦ AI Optimized</div>
+            </div>
+            <div class="variants-grid" id="g-variants"></div>
+          </div>
+          <div class="card">
+            <div class="flex-between"><div class="card-title" style="margin:0">Description</div><button class="copy-btn" onclick="copyField('g-desc',this)">📋 Copy</button></div>
+            <div class="desc-box mt8" id="g-desc"></div>
+          </div>
+          <div class="card">
+            <div class="flex-between"><div class="card-title" style="margin:0">Etsy Tags (13)</div><button class="copy-btn" onclick="copyTagsEl('g-tags',this)">📋 Copy</button></div>
+            <div class="tags-wrap mt8" id="g-tags"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── RESEARCH ─── -->
+  <div class="tab-panel" id="panel-research">
+    <div class="two-col">
+      <div>
+        <!-- Keyword Search -->
+        <div class="card">
+          <div class="card-title">Keyword Explorer</div>
+          <div class="kw-search-bar">
+            <input type="text" id="kw-query" placeholder="e.g. ceramic mug, boho jewelry, wall art..." onkeydown="if(event.key==='Enter')runKW()">
+            <button class="btn-search" id="kw-btn" onclick="runKW()"><span class="btn-text">🔍 Search</span><span class="spinner"></span></button>
+          </div>
+          <div class="form-group">
+            <label>Category <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <select id="kw-cat"><option value="">All categories</option></select>
+          </div>
+          <div class="placeholder" id="kw-ph" style="padding:32px 0"><div class="placeholder-icon">🔍</div><p>Search any product or niche to get keyword intelligence.<br>Volume estimates, competition scores, trend data.</p></div>
+          <div id="kw-res" style="display:none">
+            <div class="data-source-note" id="kw-source"><span class="source-dot"></span> Loading...</div>
+            <div class="insight-box" id="kw-insight" style="display:none"></div>
+            <div class="card-title">Primary Keywords <span style="text-transform:none;font-size:12px;font-weight:400;color:var(--muted)">(≤20 chars — Etsy tag ready)</span></div>
+            <div style="overflow-x:auto">
+              <table class="kw-table" id="kw-primary-table">
+                <thead><tr><th>Keyword</th><th>Volume</th><th>Competition</th><th>Trend</th><th>Opportunity</th><th></th></tr></thead>
+                <tbody id="kw-primary-body"></tbody>
+              </table>
+            </div>
+            <div class="card-title mt16">Long-Tail Keywords <span style="text-transform:none;font-size:12px;font-weight:400;color:var(--muted)">(high-intent buyer phrases)</span></div>
+            <div style="overflow-x:auto">
+              <table class="kw-table">
+                <thead><tr><th>Keyword</th><th>Volume</th><th>Competition</th><th>Opportunity</th></tr></thead>
+                <tbody id="kw-longtail-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <!-- Trending Now -->
+        <div class="card">
+          <div class="flex-between" style="margin-bottom:14px">
+            <div class="card-title" style="margin:0">🔥 Trending Right Now</div>
+            <button class="btn-secondary" onclick="loadTrending()" id="trend-btn" style="font-size:12px;padding:5px 12px">Refresh</button>
+          </div>
+          <div class="placeholder" id="trend-ph" style="padding:24px 0"><div class="placeholder-icon" style="font-size:28px">📈</div><p style="font-size:13px">Click Refresh to see what's trending on Etsy right now based on the current season.</p></div>
+          <div id="trend-res" style="display:none">
+            <div class="data-source-note" id="trend-source"><span class="source-dot"></span></div>
+            <div class="trending-grid" id="trend-grid"></div>
+            <div class="card-title mt16">⏰ Upcoming Seasonal Opportunities</div>
+            <div class="seasonal-list" id="seasonal-list"></div>
+            <div class="insight-box mt12" id="trend-protip" style="display:none"></div>
+          </div>
+        </div>
+        <!-- Seasonal Keywords -->
+        <div class="card" id="kw-seasonal-card" style="display:none">
+          <div class="card-title">📅 Seasonal Keywords for This Niche</div>
+          <div class="seasonal-list" id="kw-seasonal-list"></div>
+        </div>
+      </div>
+    </div>
+    <div class="error-box" id="kw-err"></div>
+  </div>
+
+  <!-- ─── AUDIT ─── -->
+  <div class="tab-panel" id="panel-audit">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Your Current Listing</div>
+        <div class="form-group">
+          <label>Current Title *</label>
+          <textarea id="a-title" rows="2" placeholder="Paste your existing Etsy title..." oninput="updateCharCount('a-title','a-tc',140)"></textarea>
+          <div class="char-count"><span id="a-tc">0</span>/140</div>
+        </div>
+        <div class="form-group">
+          <label>Current Description *</label>
+          <textarea id="a-desc" rows="4" placeholder="Paste your description..." oninput="updateCharCount('a-desc','a-dc',800)"></textarea>
+          <div class="char-count"><span id="a-dc">0</span>/800</div>
+        </div>
+        <div class="form-group">
+          <label>Current Tags <span style="color:var(--muted);font-weight:400">(comma separated)</span></label>
+          <textarea id="a-tags" rows="2" placeholder="handmade mug, ceramic coffee cup..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="a-name" placeholder="What is this product?">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="a-cat"><option value="">Select category</option></select>
+          </div>
+        </div>
+        <button class="btn-primary" id="a-btn" onclick="runA()">
+          <span class="btn-text">📊 Audit My Listing</span>
+          <span class="spinner"></span>
+        </button>
+        <div class="error-box" id="a-err"></div>
+      </div>
+      <div>
+        <div class="placeholder" id="a-ph"><div class="placeholder-icon">📊</div><p>Paste your existing listing and get an instant SEO score, issues report, and fully improved version.</p></div>
+        <div class="results" id="a-res">
+          <div class="card">
+            <div class="score-ring-wrap">
+              <div class="score-ring">
+                <svg viewBox="0 0 110 110" width="110" height="110">
+                  <circle cx="55" cy="55" r="46" fill="none" stroke="var(--border)" stroke-width="9"/>
+                  <circle id="a-ring" cx="55" cy="55" r="46" fill="none" stroke="var(--accent)" stroke-width="9" stroke-dasharray="289" stroke-dashoffset="289" stroke-linecap="round" style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1),stroke .5s ease"/>
+                </svg>
+                <div class="score-ring-text"><div class="score-num" id="a-snum">0</div><div class="score-label">Score</div></div>
+              </div>
+              <div class="grade-badge" id="a-grade">–</div>
+            </div>
+            <div class="sub-scores">
+              <div class="sub-score"><div class="sub-score-val" id="a-ts" style="color:var(--accent)">–</div><div class="sub-score-label">Title</div></div>
+              <div class="sub-score"><div class="sub-score-val" id="a-ds" style="color:var(--teal)">–</div><div class="sub-score-label">Description</div></div>
+              <div class="sub-score"><div class="sub-score-val" id="a-gs" style="color:var(--rose)">–</div><div class="sub-score-label">Tags</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Issues Found</div>
+            <ul class="issues-list" id="a-issues"></ul>
+            <div class="card-title mt12">Missed High-Value Keywords</div>
+            <div class="tags-wrap mt8" id="a-missed"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">✦ Improved Version</div>
+            <div class="section-label">Title</div>
+            <div class="bulk-title-text" id="a-imp-title"></div>
+            <div class="section-label">Description</div>
+            <div class="desc-box" id="a-imp-desc"></div>
+            <div class="section-label">Tags</div>
+            <div class="tags-wrap mt8" id="a-imp-tags"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── COMPETE ─── -->
+  <div class="tab-panel" id="panel-compete">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Your Product</div>
+        <div class="form-row">
+          <div class="form-group"><label>Product Name *</label><input type="text" id="c-name" placeholder="Your product"></div>
+          <div class="form-group"><label>Category</label><select id="c-cat"><option value="">Category</option></select></div>
+        </div>
+        <div class="form-group"><label>Your Features & USP *</label><textarea id="c-feat" rows="3" placeholder="What makes your product unique? Materials, techniques, sizes..."></textarea></div>
+        <div class="form-group"><label>Target Audience</label><input type="text" id="c-aud" placeholder="brides, home decorators, coffee enthusiasts"></div>
+        <div class="card-title" style="margin-top:18px">Competitor's Listing</div>
+        <div class="form-group"><label>Competitor's Title *</label><textarea id="c-ctitle" rows="2" placeholder="Paste their Etsy listing title..."></textarea></div>
+        <div class="form-group"><label>Competitor's Tags <span style="color:var(--muted);font-weight:400">(optional)</span></label><textarea id="c-ctags" rows="2" placeholder="Paste their tags, comma-separated..."></textarea></div>
+        <button class="btn-primary" id="c-btn" onclick="runC()">
+          <span class="btn-text">⚔️ Analyze & Outrank</span>
+          <span class="spinner"></span>
+        </button>
+        <div class="error-box" id="c-err"></div>
+      </div>
+      <div>
+        <div class="placeholder" id="c-ph"><div class="placeholder-icon">⚔️</div><p>Paste a competitor's listing to see their keyword gaps and get a listing designed to outrank them.</p></div>
+        <div class="results" id="c-res">
+          <div class="card">
+            <div class="dominance-badge">
+              <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px">Your Dominance Score</div>
+              <div class="dom-score-num" id="c-score">0</div>
+              <div class="dom-bar"><div class="dom-bar-fill" id="c-bar" style="width:0%"></div></div>
+              <div class="dom-score-sub" id="c-lbl">Analyzing...</div>
+            </div>
+            <div class="card-title">Keyword Gaps — Steal Their Traffic</div>
+            <div class="tags-wrap" id="c-mkw"></div>
+          </div>
+          <div class="card"><div class="card-title">Gap Analysis</div><div class="gap-analysis" id="c-gap"></div></div>
+          <div class="card">
+            <div class="card-title">✦ Winning Listing — Built to Outrank</div>
+            <div class="section-label">Title</div><div class="bulk-title-text" id="c-title"></div>
+            <div class="section-label">Description</div><div class="desc-box" id="c-desc"></div>
+            <div class="section-label">Tags</div><div class="tags-wrap mt8" id="c-tags"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── BULK ─── -->
+  <div class="tab-panel" id="panel-bulk">
+    <div class="two-col">
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:14px">
+          <div class="card-title" style="margin:0">Products to Optimize</div>
+          <span style="font-size:12px;color:var(--muted)" id="bulk-count">0 / 20</span>
+        </div>
+        <div class="product-list" id="product-list"></div>
+        <button class="btn-add-product" onclick="addProduct()" id="btn-add">+ Add Product</button>
+        <div style="margin-top:18px">
+          <button class="btn-primary" id="bulk-btn" onclick="runBulk()" disabled>
+            <span class="btn-text">⚡ Optimize All Products</span>
+            <span class="spinner"></span>
+          </button>
+          <div class="error-box" id="bulk-err"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:14px">
+          <div class="card-title" style="margin:0">Results</div>
+          <button class="copy-all-btn" onclick="copyAllBulk()" id="btn-copy-all" style="display:none">📋 Copy All</button>
+        </div>
+        <div id="bulk-ph" style="text-align:center;padding:36px 0;color:var(--muted)">
+          <div style="font-size:30px;margin-bottom:8px;opacity:.35">⚡</div>
+          <p style="font-size:13px">Add products on the left and click Optimize All.</p>
+          <p style="font-size:12px;margin-top:6px">Pro tip: Add up to 20 products at once.</p>
+        </div>
+        <div id="bulk-prog" class="bulk-progress" style="display:none">
+          <div class="bulk-progress-bar"><div class="bulk-progress-fill" id="bulk-pfill" style="width:0%"></div></div>
+          <div class="bulk-progress-text" id="bulk-ptxt">0 of 0 complete</div>
+        </div>
+        <div class="bulk-results" id="bulk-results"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYWALL MODAL -->
+<div class="modal-overlay" id="paywall" onclick="closePaywall(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-icon">✦</div>
+      <div class="modal-title">Unlock Unlimited Access</div>
+      <div class="modal-sub" id="paywall-sub">You've used your 7 free optimizations. Upgrade to keep growing your Etsy shop.</div>
+    </div>
+    <div class="plans">
+      <div class="plan" onclick="handleUpgrade('starter')">
+        <div class="plan-name">STARTER</div>
+        <div class="plan-price">$9<span>/mo</span></div>
+        <div class="plan-feat">Unlimited Generate, Audit & Compete<br>Keyword Research<br>50 Bulk listings/mo</div>
+      </div>
+      <div class="plan featured" onclick="handleUpgrade('pro')">
+        <div class="plan-name">✦ PRO</div>
+        <div class="plan-price">$19<span>/mo</span></div>
+        <div class="plan-feat">Everything in Starter<br>Unlimited Bulk · CSV Export<br>Priority AI · Competitor Tracking</div>
+      </div>
+    </div>
+    <div class="modal-guarantee">🛡️ <strong>30-day money-back guarantee.</strong> Cancel anytime.</div>
+    <button class="modal-close" onclick="closePaywall()">Maybe later</button>
+  </div>
+</div>
+
+<!-- EMAIL CAPTURE MODAL -->
+<div class="modal-overlay" id="email-modal" onclick="closeEmailModal(event)">
+  <div class="email-modal">
+    <h2>✦ Get Your Free Results</h2>
+    <p>Enter your email to unlock your optimized listing. We'll also send you Etsy growth tips weekly — unsubscribe anytime.</p>
+    <div class="email-input-wrap">
+      <input type="email" id="email-input" placeholder="your@email.com" onkeydown="if(event.key==='Enter')submitEmail()">
+      <button class="btn-email-submit" onclick="submitEmail()">Get Results</button>
+    </div>
+    <div id="email-error" style="color:var(--rose);font-size:12px;text-align:center"></div>
+    <span class="email-skip" onclick="skipEmail()">Skip for now →</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">✦ Listora</div>
+    <div class="footer-links">
+      <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'});return false">Pricing</a>
+      <a href="#compare" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'});return false">Compare</a>
+      <a href="mailto:support@listora.io">support@listora.io</a>
+    </div>
+    <div class="footer-copy">© <span id="footer-year">2026</span> Listora · Made for Etsy sellers · <a href="mailto:support@listora.io">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+// ─── CONSTANTS ────────────────────────────────────────────────
+const FREE_LIMIT = 7;
+const STORAGE_KEY = 'listora_uses_v3';
+const EMAIL_KEY = 'listora_email';
+const EMAIL_SHOWN_KEY = 'listora_email_shown';
+const CATEGORIES = ['Jewelry & Accessories','Clothing & Shoes','Home & Living','Wedding & Party','Toys & Entertainment','Art & Collectibles','Craft Supplies & Tools','Vintage','Paper & Party Supplies','Pet Supplies','Beauty & Personal Care','Bags & Purses','Food & Drink','Electronics & Accessories'];
+
+// ─── INIT ─────────────────────────────────────────────────────
+(function init(){
+  // Populate all category selects
+  const catOptions = '<option value="">Select category</option>' + CATEGORIES.map(c=>`<option>${c}</option>`).join('');
+  ['g-cat','a-cat','c-cat'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.innerHTML=catOptions;
+  });
+  const kwCat=document.getElementById('kw-cat');
+  if(kwCat) kwCat.innerHTML='<option value="">All categories</option>'+CATEGORIES.map(c=>`<option>${c}</option>`).join('');
+  // Theme
+  const saved=localStorage.getItem('listora_theme');
+  if(saved==='dark') document.documentElement.setAttribute('data-theme','dark');
+  updateThemeBtn();
+  updateUsageBadge();
+})();
+
+// ─── USAGE ────────────────────────────────────────────────────
+function getUses(){return parseInt(localStorage.getItem(STORAGE_KEY)||'0')}
+function incUses(){localStorage.setItem(STORAGE_KEY,getUses()+1);updateUsageBadge()}
+function updateUsageBadge(){
+  const left=Math.max(0,FREE_LIMIT-getUses());
+  document.getElementById('usageLeft').textContent=left;
+}
+function checkLimit(){
+  if(getUses()>=FREE_LIMIT){showPaywall();return false}
+  return true;
+}
+function maybeCaptureEmail(cb){
+  if(localStorage.getItem(EMAIL_KEY)||localStorage.getItem(EMAIL_SHOWN_KEY)){
+    cb();return;
+  }
+  // Show email capture on 3rd use
+  if(getUses()>=2){
+    pendingCallback=cb;
+    document.getElementById('email-modal').classList.add('open');
+  }else{
+    cb();
+  }
+}
+let pendingCallback=null;
+async function submitEmail(){
+  const email = document.getElementById('email-input').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('email-error').textContent = 'Please enter a valid email.';
+    return;
+  }
+  localStorage.setItem(EMAIL_KEY, email);
+  localStorage.setItem(EMAIL_SHOWN_KEY, '1');
+  document.getElementById('email-modal').classList.remove('open');
+  if(pendingCallback){ pendingCallback(); pendingCallback = null; }
+
+  // Send to Resend in background
+  try {
+    await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email })
+    });
+  } catch(e) { /* silently fail */ }
+}
+function skipEmail(){
+  localStorage.setItem(EMAIL_SHOWN_KEY,'1');
+  document.getElementById('email-modal').classList.remove('open');
+  if(pendingCallback){pendingCallback();pendingCallback=null}
+}
+function closeEmailModal(e){if(e.target===document.getElementById('email-modal')){skipEmail()}}
+
+// ─── THEME ────────────────────────────────────────────────────
+function updateThemeBtn(){
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const btn=document.getElementById('themeBtn');
+  if(btn) btn.textContent=isDark?'☀️':'🌙';
+}
+function toggleTheme(){
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  localStorage.setItem('listora_theme',isDark?'light':'dark');
+  updateThemeBtn();
+}
+
+// ─── TABS ─────────────────────────────────────────────────────
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+function scrollToApp(){document.getElementById('app').scrollIntoView({behavior:'smooth'})}
+
+// ─── UTILS ────────────────────────────────────────────────────
+function updateCharCount(inputId,countId,max){
+  const el=document.getElementById(inputId),cnt=document.getElementById(countId);
+  if(!el||!cnt)return;
+  const len=el.value.length;
+  cnt.textContent=len;
+  cnt.parentElement.classList.toggle('warn',len>max);
+}
+function setLoading(btnId,on){
+  const btn=document.getElementById(btnId);
+  if(!btn)return;
+  btn.classList.toggle('loading',on);
+  btn.disabled=on;
+}
+function showErr(id,msg){const el=document.getElementById(id);if(el){el.textContent=msg;el.classList.add('visible')}}
+function clearErr(id){const el=document.getElementById(id);if(el){el.textContent='';el.classList.remove('visible')}}
+function showRes(rid,pid){
+  const r=document.getElementById(rid),p=document.getElementById(pid);
+  if(r)r.classList.add('visible');if(p)p.style.display='none';
+}
+function hideRes(rid,pid){
+  const r=document.getElementById(rid),p=document.getElementById(pid);
+  if(r)r.classList.remove('visible');if(p)p.style.display='';
+}
+async function copyField(id,btn){
+  const el=document.getElementById(id);if(!el)return;
+  await navigator.clipboard.writeText(el.textContent.trim()).catch(()=>{});
+  btn.textContent='✓ Copied!';btn.classList.add('copied');
+  setTimeout(()=>{btn.innerHTML='📋 Copy';btn.classList.remove('copied')},2000);
+}
+async function copyTagsEl(id,btn){
+  const el=document.getElementById(id);if(!el)return;
+  const text=Array.from(el.querySelectorAll('.tag')).map(t=>t.textContent.replace(/^✓ /,'')).join(', ');
+  await navigator.clipboard.writeText(text).catch(()=>{});
+  btn.textContent='✓ Copied!';btn.classList.add('copied');
+  setTimeout(()=>{btn.innerHTML='📋 Copy';btn.classList.remove('copied')},2000);
+}
+async function copyText(text,btn){
+  await navigator.clipboard.writeText(text).catch(()=>{});
+  if(btn){btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.innerHTML='📋 Copy';btn.classList.remove('copied')},2000)}
+}
+function escapeHtml(s){
+  if(!s)return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function renderTags(tags,wrapId,cls){
+  const w=document.getElementById(wrapId);if(!w)return;
+  w.innerHTML=tags.map(t=>`<span class="tag ${cls||''}">${escapeHtml(t)}</span>`).join('');
+}
+
+// ─── GENERATE ─────────────────────────────────────────────────
+async function runG(){
+  if(!checkLimit())return;
+  const name=document.getElementById('g-name').value.trim();
+  const feat=document.getElementById('g-feat').value.trim();
+  if(!name||!feat){showErr('g-err','Please enter a product name and key features.');return}
+  clearErr('g-err');
+  maybeCaptureEmail(async()=>{
+    setLoading('g-btn',true);hideRes('g-res','g-ph');
+    try{
+      const res=await fetch('/api/optimize',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({productName:name,category:document.getElementById('g-cat').value,features:feat,targetAudience:document.getElementById('g-aud').value,occasion:document.getElementById('g-occ').value})
+      });
+      if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+      const data=await res.json();
+      incUses();renderG(data);
+    }catch(e){showErr('g-err',e.message||'Something went wrong. Please try again.')}
+    finally{setLoading('g-btn',false)}
+  });
+}
+let lastGenTitles=[];
+function renderG(data){
+  const titles=data.titles||[];
+  lastGenTitles=titles.map(t=>typeof t==='object'?t.text:String(t));
+  document.getElementById('g-variants').innerHTML=titles.map((t,i)=>{
+    const text=typeof t==='object'?t.text:t;
+    const angle=typeof t==='object'?t.angle:'';
+    const strength=typeof t==='object'?t.strength:'';
+    return `<div class="variant-card${i===0?' selected':''}" onclick="selectVariant(this)">
+      <div class="variant-meta">
+        <span class="variant-num">Option ${i+1}</span>
+        ${angle?`<span class="variant-angle">${escapeHtml(angle)}</span>`:''}
+        ${strength?`<span class="variant-strength">${escapeHtml(strength)}</span>`:''}
+      </div>
+      <div class="variant-text">${escapeHtml(text)}</div>
+      <div class="variant-len">${String(text).length} chars</div>
+      <button class="copy-btn" onclick="event.stopPropagation();copyVariant(${i},this)">📋 Copy</button>
+    </div>`;
+  }).join('');
+  document.getElementById('g-desc').textContent=data.description||'';
+  const tags=data.tags||[];
+  document.getElementById('g-tags').innerHTML=tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('');
+  showRes('g-res','g-ph');
+}
+function copyVariant(i,btn){copyText(lastGenTitles[i]||'',btn)}
+function selectVariant(el){
+  el.closest('.variants-grid').querySelectorAll('.variant-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ─── KEYWORD RESEARCH ─────────────────────────────────────────
+async function runKW(){
+  const query=document.getElementById('kw-query').value.trim();
+  if(!query)return;
+  clearErr('kw-err');
+  const btn=document.getElementById('kw-btn');
+  btn.classList.add('loading');btn.disabled=true;
+  document.getElementById('kw-ph').style.display='none';
+  document.getElementById('kw-res').style.display='none';
+  try{
+    const res=await fetch('/api/keywords',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({query,category:document.getElementById('kw-cat').value})
+    });
+    if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+    const data=await res.json();
+    renderKW(data);
+  }catch(e){
+    showErr('kw-err',e.message||'Failed to fetch keyword data.');
+    document.getElementById('kw-ph').style.display='';
+  }finally{
+    btn.classList.remove('loading');btn.disabled=false;
+  }
+}
+function renderKW(data){
+  document.getElementById('kw-source').innerHTML=`<span class="source-dot"></span> ${escapeHtml(data.dataSource||'AI Analysis')} · ${new Date().toLocaleDateString()}`;
+  const insight=document.getElementById('kw-insight');
+  if(data.insight){insight.innerHTML=`<strong>💡 Insight:</strong> ${escapeHtml(data.insight)}`;insight.style.display='block'}
+  // Primary keywords table
+  const pb=document.getElementById('kw-primary-body');
+  pb.innerHTML=(data.primaryKeywords||[]).map(k=>`
+    <tr>
+      <td><span class="kw-keyword">${escapeHtml(k.keyword)}</span></td>
+      <td>
+        <div class="vol-bar-wrap">
+          <span class="vol-pill ${k.volumeEstimate==='High'?'vol-high':k.volumeEstimate==='Medium'?'vol-med':'vol-low'}">${escapeHtml(k.volumeEstimate)}</span>
+          <div class="vol-bar" style="max-width:60px"><div class="vol-bar-fill" style="width:${parseInt(k.volumeScore)||50}%"></div></div>
+        </div>
+      </td>
+      <td><span class="comp-pill ${k.competition==='High'?'comp-high':k.competition==='Medium'?'comp-med':'comp-low'}">${escapeHtml(k.competition)}</span></td>
+      <td><span class="${k.trend==='Rising'?'trend-up':k.trend==='Declining'?'trend-down':'trend-stable'}">${k.trend==='Rising'?'↑ Rising':k.trend==='Declining'?'↓ Declining':'→ Stable'}</span></td>
+      <td><span class="opp-badge ${k.opportunity==='High'?'opp-high':k.opportunity==='Medium'?'opp-med':'opp-low'}">${escapeHtml(k.opportunity)}</span></td>
+      <td><button class="btn-use" data-kw="${escapeHtml(k.keyword)}" onclick="useKeyword(this.dataset.kw)">+ Use</button></td>
+    </tr>
+  `).join('');
+  // Long-tail table
+  const lb=document.getElementById('kw-longtail-body');
+  lb.innerHTML=(data.longTailKeywords||[]).map(k=>`
+    <tr>
+      <td><span class="kw-keyword">${escapeHtml(k.keyword)}</span><div style="font-size:12px;color:var(--muted);margin-top:2px">${escapeHtml(k.reason||'')}</div></td>
+      <td><span class="vol-pill ${k.volumeEstimate==='High'?'vol-high':k.volumeEstimate==='Medium'?'vol-med':'vol-low'}">${escapeHtml(k.volumeEstimate)}</span></td>
+      <td><span class="comp-pill ${k.competition==='High'?'comp-high':k.competition==='Medium'?'comp-med':'comp-low'}">${escapeHtml(k.competition)}</span></td>
+      <td><span class="opp-badge ${k.opportunity==='High'?'opp-high':k.opportunity==='Medium'?'opp-med':'opp-low'}">${escapeHtml(k.opportunity)}</span></td>
+    </tr>
+  `).join('');
+  // Seasonal
+  const seasonal=data.seasonalKeywords||[];
+  if(seasonal.length>0){
+    const sc=document.getElementById('kw-seasonal-card');
+    const sl=document.getElementById('kw-seasonal-list');
+    sl.innerHTML=seasonal.map(k=>`
+      <div class="seasonal-item">
+        <span class="seasonal-event">📅</span>
+        <div>
+          <div class="seasonal-kw">${escapeHtml(k.keyword)}</div>
+          <div class="seasonal-detail">${escapeHtml(k.season)} · Peak: ${escapeHtml(k.peakMonths||'–')}</div>
+        </div>
+        <span class="trend-up" style="margin-left:auto;font-size:12px">${k.trend==='Rising'?'↑':k.trend==='Declining'?'↓':'→'}</span>
+      </div>
+    `).join('');
+    sc.style.display='block';
+  }
+  document.getElementById('kw-res').style.display='block';
+}
+function useKeyword(kw){
+  // Switch to generate and pre-fill
+  switchTab('generate');
+  const feat=document.getElementById('g-feat');
+  const val=feat.value.trim();
+  feat.value=val?(val+', '+kw):kw;
+  feat.focus();
+  document.getElementById('app').scrollIntoView({behavior:'smooth'});
+}
+
+// ─── TRENDING ─────────────────────────────────────────────────
+async function loadTrending(){
+  const btn=document.getElementById('trend-btn');
+  btn.textContent='Loading...';btn.disabled=true;
+  document.getElementById('trend-ph').style.display='none';
+  try{
+    const res=await fetch('/api/trending',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+    const data=await res.json();
+    renderTrending(data);
+  }catch(e){
+    showErr('kw-err',e.message||'Failed to load trending data.');
+    document.getElementById('trend-ph').style.display='';
+  }finally{btn.textContent='Refresh';btn.disabled=false}
+}
+function renderTrending(data){
+  document.getElementById('trend-source').innerHTML=`<span class="source-dot"></span> ${escapeHtml(data.season||'')} · Updated just now`;
+  const tg=document.getElementById('trend-grid');
+  tg.innerHTML=(data.trendingNow||[]).map(t=>`
+    <div class="trending-card">
+      <div class="trending-kw">${escapeHtml(t.keyword)}</div>
+      <div class="trending-meta">
+        <div class="trending-score">${parseInt(t.trendScore)||0}</div>
+        <div class="trend-label" style="color:${String(t.momentumLabel||'').includes('Exploding')?'var(--rose)':String(t.momentumLabel||'').includes('Rising')?'var(--teal)':'var(--amber)'}">${escapeHtml(t.momentumLabel)}</div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:5px">${escapeHtml(t.reason||'')}</div>
+    </div>
+  `).join('');
+  const sl=document.getElementById('seasonal-list');
+  sl.innerHTML=(data.upcomingSeasonal||[]).map(s=>`
+    <div class="seasonal-item">
+      <span class="seasonal-event">📅</span>
+      <div>
+        <div class="seasonal-kw">${escapeHtml(s.keyword)}</div>
+        <div class="seasonal-detail">${escapeHtml(s.event)} · ${escapeHtml(s.tip||'')}</div>
+      </div>
+      <span class="urgency-badge ${String(s.urgency)==='Act now'?'urgency-now':s.urgency&&String(s.urgency).includes('week')?'urgency-soon':'urgency-later'}">${escapeHtml(s.urgency||'Upcoming')}</span>
+    </div>
+  `).join('');
+  const pt=document.getElementById('trend-protip');
+  if(data.proTip){pt.innerHTML=`<strong>💡 Pro Tip:</strong> ${escapeHtml(data.proTip)}`;pt.style.display='block'}
+  document.getElementById('trend-res').style.display='block';
+}
+
+// ─── AUDIT ────────────────────────────────────────────────────
+async function runA(){
+  if(!checkLimit())return;
+  const title=document.getElementById('a-title').value.trim();
+  const desc=document.getElementById('a-desc').value.trim();
+  if(!title||!desc){showErr('a-err','Please enter your current title and description.');return}
+  clearErr('a-err');
+  maybeCaptureEmail(async()=>{
+    setLoading('a-btn',true);hideRes('a-res','a-ph');
+    try{
+      const res=await fetch('/api/audit',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({title,description:desc,tags:document.getElementById('a-tags').value,productName:document.getElementById('a-name').value,category:document.getElementById('a-cat').value})
+      });
+      if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+      const data=await res.json();
+      incUses();renderA(data);
+    }catch(e){showErr('a-err',e.message||'Something went wrong. Please try again.')}
+    finally{setLoading('a-btn',false)}
+  });
+}
+function renderA(data){
+  const score=data.score||0;
+  const circ=2*Math.PI*46;
+  const offset=circ-(score/100)*circ;
+  const ring=document.getElementById('a-ring');
+  setTimeout(()=>{ring.style.strokeDashoffset=offset},100);
+  const gradeColors={'A+':'#00b894','A':'#00cec9','B':'#6c5ce7','C':'#fdcb6e','D':'#e17055','F':'#d63031'};
+  const grade=data.grade||'–';
+  ring.style.stroke=gradeColors[grade]||'var(--accent)';
+  document.getElementById('a-snum').textContent=score;
+  const gb=document.getElementById('a-grade');
+  gb.textContent=grade;
+  gb.style.background=(gradeColors[grade]||'#6c5ce7')+'22';
+  gb.style.color=gradeColors[grade]||'var(--accent)';
+  document.getElementById('a-ts').textContent=data.titleScore??'–';
+  document.getElementById('a-ds').textContent=data.descScore??'–';
+  document.getElementById('a-gs').textContent=data.tagsScore??'–';
+  const il=document.getElementById('a-issues');
+  il.innerHTML=(data.issues||[]).length?(data.issues||[]).map(i=>`<li class="issue-item"><span>⚠️</span>${escapeHtml(i)}</li>`).join(''):'<li class="issue-item"><span>✅</span>No major issues found!</li>';
+  document.getElementById('a-missed').innerHTML=(data.missedKeywords||[]).map(k=>`<span class="tag teal">${escapeHtml(k)}</span>`).join('')||'<span style="color:var(--muted);font-size:12px">None found</span>';
+  document.getElementById('a-imp-title').textContent=data.improvedTitle||'';
+  document.getElementById('a-imp-desc').textContent=data.improvedDescription||'';
+  renderTags(data.improvedTags||[],'a-imp-tags','');
+  showRes('a-res','a-ph');
+}
+
+// ─── COMPETE ──────────────────────────────────────────────────
+async function runC(){
+  if(!checkLimit())return;
+  const name=document.getElementById('c-name').value.trim();
+  const ctitle=document.getElementById('c-ctitle').value.trim();
+  if(!name||!ctitle){showErr('c-err','Please enter your product name and the competitor title.');return}
+  clearErr('c-err');
+  maybeCaptureEmail(async()=>{
+    setLoading('c-btn',true);hideRes('c-res','c-ph');
+    try{
+      const res=await fetch('/api/compete',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({productName:name,category:document.getElementById('c-cat').value,features:document.getElementById('c-feat').value,targetAudience:document.getElementById('c-aud').value,competitorTitle:ctitle,competitorTags:document.getElementById('c-ctags').value})
+      });
+      if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+      const data=await res.json();
+      incUses();renderC(data);
+    }catch(e){showErr('c-err',e.message||'Something went wrong. Please try again.')}
+    finally{setLoading('c-btn',false)}
+  });
+}
+function renderC(data){
+  const score=data.dominanceScore||0;
+  document.getElementById('c-score').textContent=score;
+  setTimeout(()=>{document.getElementById('c-bar').style.width=score+'%'},100);
+  document.getElementById('c-lbl').textContent=score>=80?'🔥 You dominate this niche':score>=60?'✅ Strong competitive advantage':score>=40?'⚡ Competitive position':'⚠️ Needs keyword optimization';
+  document.getElementById('c-mkw').innerHTML=(data.missingKeywords||[]).map(k=>`<span class="tag accent">${escapeHtml(k)}</span>`).join('')||'<span style="color:var(--muted);font-size:12px">No major gaps found</span>';
+  document.getElementById('c-gap').textContent=data.gapAnalysis||'';
+  document.getElementById('c-title').textContent=data.title||'';
+  document.getElementById('c-desc').textContent=data.description||'';
+  renderTags(data.tags||[],'c-tags','');
+  showRes('c-res','c-ph');
+}
+
+// ─── BULK ─────────────────────────────────────────────────────
+let bulkProducts=[];
+const MAX_PRODUCTS=20;
+function addProduct(){
+  if(bulkProducts.length>=MAX_PRODUCTS)return;
+  bulkProducts.push({id:Date.now(),name:'',category:'',features:''});
+  renderProductList();
+}
+function removeProduct(id){
+  bulkProducts=bulkProducts.filter(p=>p.id!==id);
+  renderProductList();
+}
+function updateProduct(id,field,value){
+  const p=bulkProducts.find(x=>x.id===id);
+  if(p)p[field]=value;
+  document.getElementById('bulk-btn').disabled=bulkProducts.length===0;
+}
+function renderProductList(){
+  const list=document.getElementById('product-list');
+  document.getElementById('bulk-count').textContent=`${bulkProducts.length} / ${MAX_PRODUCTS}`;
+  document.getElementById('btn-add').disabled=bulkProducts.length>=MAX_PRODUCTS;
+  document.getElementById('bulk-btn').disabled=bulkProducts.length===0;
+  const catOpts=CATEGORIES.map(c=>`<option>${c}</option>`).join('');
+  list.innerHTML=bulkProducts.map((p,i)=>`
+    <div class="product-item" id="pi-${p.id}">
+      <div class="product-item-header">
+        <span class="product-num">#${i+1}</span>
+        <button class="btn-remove" onclick="removeProduct(${p.id})">✕</button>
+      </div>
+      <div class="form-group" style="margin-bottom:7px">
+        <label style="font-size:12px">Product Name *</label>
+        <input type="text" placeholder="e.g. Handmade Ceramic Mug" value="${p.name.replace(/"/g,'&quot;')}" oninput="updateProduct(${p.id},'name',this.value)" style="padding:7px 10px;font-size:12px">
+      </div>
+      <div class="form-group" style="margin-bottom:7px">
+        <label style="font-size:12px">Category</label>
+        <select onchange="updateProduct(${p.id},'category',this.value)" style="padding:7px 10px;font-size:12px">
+          <option value="">Category</option>${catOpts}
+        </select>
+      </div>
+      <div class="form-group" style="margin:0">
+        <label style="font-size:12px">Key Features</label>
+        <textarea placeholder="Materials, features, style..." rows="2" oninput="updateProduct(${p.id},'features',this.value)" style="padding:7px 10px;font-size:12px;min-height:52px">${p.features}</textarea>
+      </div>
+    </div>
+  `).join('');
+  bulkProducts.forEach(p=>{
+    const sel=document.querySelector(`#pi-${p.id} select`);
+    if(sel&&p.category)sel.value=p.category;
+  });
+}
+let bulkResults={};
+async function runBulk(){
+  if(!checkLimit())return;
+  const valid=bulkProducts.filter(p=>p.name.trim()&&p.features.trim());
+  if(!valid.length){showErr('bulk-err','Please add at least one product with name and features.');return}
+  clearErr('bulk-err');bulkResults={};
+  document.getElementById('bulk-ph').style.display='none';
+  document.getElementById('bulk-prog').style.display='block';
+  document.getElementById('btn-copy-all').style.display='none';
+  setLoading('bulk-btn',true);
+  const rd=document.getElementById('bulk-results');
+  rd.innerHTML=valid.map(p=>`
+    <div class="bulk-card" id="bc-${p.id}">
+      <div class="bulk-card-header" onclick="toggleBulkCard(${p.id})">
+        <span class="bulk-card-status" id="bs-${p.id}">⏳</span>
+        <span class="bulk-card-name">${escapeHtml(p.name)}</span>
+        <span class="bulk-card-toggle" id="bt-${p.id}">▸</span>
+      </div>
+      <div class="bulk-card-body" id="bb-${p.id}"></div>
+    </div>
+  `).join('');
+  updateBulkProg(0,valid.length);
+  for(let i=0;i<valid.length;i++){
+    const p=valid[i];
+    const card=document.getElementById(`bc-${p.id}`);
+    const status=document.getElementById(`bs-${p.id}`);
+    status.textContent='⟳';card.className='bulk-card processing';
+    try{
+      const res=await fetch('/api/optimize',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productName:p.name,category:p.category,features:p.features})});
+      if(!res.ok){const d=await res.json().catch(()=>({}));throw new Error(d.error||'Server error')}
+      const data=await res.json();
+      bulkResults[p.id]={...data,name:p.name};
+      updateBulkCard(p.id,data,p.name);
+    }catch(e){
+      status.textContent='✗';card.className='bulk-card error';
+      document.getElementById(`bb-${p.id}`).innerHTML=`<div style="color:var(--rose);font-size:12px;padding:4px">${e.message}</div>`;
+    }
+    updateBulkProg(i+1,valid.length);
+    if(i<valid.length-1)await new Promise(r=>setTimeout(r,600));
+  }
+  incUses();setLoading('bulk-btn',false);
+  if(Object.keys(bulkResults).length>0)document.getElementById('btn-copy-all').style.display='';
+}
+function updateBulkCard(id,data,name){
+  const card=document.getElementById(`bc-${id}`);
+  const body=document.getElementById(`bb-${id}`);
+  const toggle=document.getElementById(`bt-${id}`);
+  document.getElementById(`bs-${id}`).textContent='✓';
+  card.className='bulk-card done';
+  const titles=data.titles||[];
+  const firstTitle=titles.length>0?(typeof titles[0]==='object'?titles[0].text:titles[0]):'';
+  body.innerHTML=`
+    <div class="bulk-title-text">${escapeHtml(firstTitle)}</div>
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">Description</div>
+    <div class="desc-box" style="font-size:12px;max-height:100px;overflow:auto">${escapeHtml(data.description||'')}</div>
+    <div style="font-size:12px;color:var(--muted);font-weight:700;margin:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">Tags</div>
+    <div class="tags-wrap">${(data.tags||[]).map(t=>`<span class="tag" style="font-size:12px">${escapeHtml(t)}</span>`).join('')}</div>
+    <div style="margin-top:8px"><button class="copy-btn" onclick="copySingle(${id})">📋 Copy Listing</button></div>
+  `;
+  body.classList.add('open');toggle.textContent='▾';
+}
+function updateBulkProg(done,total){
+  const pct=total>0?Math.round((done/total)*100):0;
+  document.getElementById('bulk-pfill').style.width=pct+'%';
+  document.getElementById('bulk-ptxt').textContent=`${done} of ${total} complete`;
+}
+function toggleBulkCard(id){
+  const body=document.getElementById(`bb-${id}`),toggle=document.getElementById(`bt-${id}`);
+  const open=body.classList.toggle('open');
+  toggle.textContent=open?'▾':'▸';
+}
+async function copySingle(id){
+  const r=bulkResults[id];if(!r)return;
+  const titles=r.titles||[];
+  const first=titles.length>0?(typeof titles[0]==='object'?titles[0].text:titles[0]):'';
+  const text=`=== ${r.name} ===\nTITLE: ${first}\n\nDESCRIPTION:\n${r.description}\n\nTAGS: ${(r.tags||[]).join(', ')}`;
+  await navigator.clipboard.writeText(text).catch(()=>{});
+}
+async function copyAllBulk(){
+  const parts=Object.values(bulkResults).map(r=>{
+    const titles=r.titles||[];
+    const first=titles.length>0?(typeof titles[0]==='object'?titles[0].text:titles[0]):'';
+    return `=== ${r.name} ===\nTITLE: ${first}\n\nDESCRIPTION:\n${r.description}\n\nTAGS: ${(r.tags||[]).join(', ')}`;
+  });
+  await navigator.clipboard.writeText(parts.join('\n\n'+'─'.repeat(40)+'\n\n')).catch(()=>{});
+  const btn=document.getElementById('btn-copy-all');
+  btn.textContent='✓ Copied All!';
+  setTimeout(()=>{btn.textContent='📋 Copy All'},2000);
+}
+
+// ─── PAYWALL ──────────────────────────────────────────────────
+function showPaywall(){
+  // Message must match reality: users can open this from the Upgrade button
+  // before exhausting the free tier.
+  const left=Math.max(0,FREE_LIMIT-getUses());
+  const sub=document.getElementById('paywall-sub');
+  if(sub){
+    sub.textContent = left>0
+      ? `You have ${left} free optimization${left===1?'':'s'} left. Upgrade for unlimited access and keep growing your Etsy shop.`
+      : "You've used your 7 free optimizations. Upgrade to keep growing your Etsy shop.";
+  }
+  document.getElementById('paywall').classList.add('open')}
+function closePaywall(e){if(!e||e.target===document.getElementById('paywall'))document.getElementById('paywall').classList.remove('open')}
+function handleUpgrade(plan){
+  if(plan === 'pro'){
+    window.open('https://buy.stripe.com/6oU9AT8hzf4m0aFaCDfUQ01', '_blank');
+  } else {
+    window.open('https://buy.stripe.com/dRm14neFXf4m1eJ5ijfUQ00', '_blank');
+  }
+}
+
+// ─── PARTICLE BACKGROUND ─────────────────────────────────────────────────────
+(function(){
+  const canvas=document.getElementById('particles');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  const N=55,MAX_DIST=120;
+
+  function resize(){
+    const section=document.getElementById('landing');
+    W=canvas.width=section.offsetWidth;
+    H=canvas.height=section.offsetHeight;
+  }
+
+  function mkParticle(){
+    return{
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+      r:Math.random()*2+1
+    };
+  }
+
+  function init(){resize();particles=Array.from({length:N},mkParticle)}
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+    const dotColor=isDark?'rgba(162,155,254,.45)':'rgba(108,92,231,.25)';
+    const lineColor=isDark?'rgba(162,155,254,.08)':'rgba(108,92,231,.06)';
+
+    // Move
+    for(const p of particles){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+    }
+    // Lines
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<MAX_DIST){
+          ctx.beginPath();
+          ctx.strokeStyle=lineColor;
+          ctx.globalAlpha=(1-d/MAX_DIST)*.6;
+          ctx.lineWidth=.7;
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    // Dots
+    ctx.globalAlpha=1;
+    for(const p of particles){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=dotColor;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  init();draw();
+  window.addEventListener('resize',()=>{resize();particles=Array.from({length:N},mkParticle)});
+})();
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
+(function(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+// ─── COUNTER ANIMATION ────────────────────────────────────────────────────────
+(function(){
+  function animCount(el,target,duration){
+    const start=performance.now();
+    function step(now){
+      const t=Math.min((now-start)/duration,1);
+      const ease=1-Math.pow(1-t,3);
+      el.textContent=Math.round(ease*target);
+      if(t<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const target=parseInt(e.target.dataset.count);
+        if(!isNaN(target))animCount(e.target,target,1500);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.5});
+  document.querySelectorAll('.stat-num[data-count]').forEach(el=>io.observe(el));
+})();
+
+// ─── RIPPLE EFFECT ────────────────────────────────────────────────────────────
+document.querySelectorAll('.ripple-wrap').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    const r=document.createElement('span');
+    r.className='ripple-wave';
+    const rect=btn.getBoundingClientRect();
+    const size=Math.max(rect.width,rect.height)*2;
+    r.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+    btn.appendChild(r);
+    setTimeout(()=>r.remove(),560);
+  });
+});
+
+// Init bulk tab with one product
+addProduct();
+// Auto-load trending on research tab
+document.getElementById('tab-research').addEventListener('click',function(){
+  if(!document.getElementById('trend-res').style.display||document.getElementById('trend-res').style.display==='none'){
+    setTimeout(loadTrending,300);
+  }
+});
+
+// NUCLEUS: keep footer year current automatically
+var _fy=document.getElementById('footer-year'); if(_fy){_fy.textContent=new Date().getFullYear();}
+</script>
+</body>
+</html>
