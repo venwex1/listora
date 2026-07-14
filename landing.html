@@ -7,7 +7,7 @@
 <meta name="description" content="AI-powered Etsy listing optimizer with real keyword data, competitor analysis, bulk tools and SEO audit. Used by 1000s of Etsy sellers.">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--accent:#6c5ce7;--accent2:#a29bfe;--teal:#00b894;--rose:#e17055;--amber:#fdcb6e;--grad:linear-gradient(135deg,#6c5ce7 0%,#a29bfe 50%,#fd79a8 100%);--p:#1a1535;--p2:#4b4575;--muted:#6a6490;--bg:#f8f7ff;--surface:#fff;--border:#e2dfff;--radius:16px;--radius-sm:10px;--shadow:0 4px 24px rgba(108,92,231,.10);--shadow-lg:0 8px 40px rgba(108,92,231,.18)}
+:root{--accent:#6c5ce7;--accent2:#a29bfe;--teal:#00b894;--rose:#e17055;--amber:#fdcb6e;--grad:linear-gradient(135deg,#6c5ce7 0%,#a29bfe 50%,#fd79a8 100%);--btn-grad:linear-gradient(135deg,#6c5ce7 0%,#5a4bd1 50%,#b44870 100%);--p:#1a1535;--p2:#4b4575;--muted:#6a6490;--bg:#f8f7ff;--surface:#fff;--border:#e2dfff;--radius:16px;--radius-sm:10px;--shadow:0 4px 24px rgba(108,92,231,.10);--shadow-lg:0 8px 40px rgba(108,92,231,.18)}
 html{scroll-behavior:smooth}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--p);background:var(--bg);line-height:1.6}
 a{color:var(--accent);text-decoration:none}
@@ -19,7 +19,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-
 .nav-links{display:flex;align-items:center;gap:24px}
 .nav-links a{font-size:14px;color:var(--p2);font-weight:500;transition:.2s}
 .nav-links a:hover{color:var(--accent)}
-.btn-nav{padding:8px 20px;border-radius:20px;background:var(--grad);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:.2s;box-shadow:0 2px 10px rgba(108,92,231,.3)}
+.btn-nav{padding:8px 20px;border-radius:20px;background:var(--btn-grad);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:.2s;box-shadow:0 2px 10px rgba(108,92,231,.3)}
 .btn-nav:hover{opacity:.88;transform:translateY(-1px)}
 @media(max-width:600px){.nav-links .hide-mobile{display:none}}
 /* HERO */
@@ -29,7 +29,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-
 .hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:19px;color:var(--p2);max-width:560px;margin:0 auto 36px;line-height:1.6}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
-.btn-primary{padding:15px 36px;border-radius:var(--radius-sm);background:var(--grad);color:#fff;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(108,92,231,.35);transition:.25s}
+.btn-primary{padding:15px 36px;border-radius:var(--radius-sm);background:var(--btn-grad);color:#fff;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(108,92,231,.35);transition:.25s}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 32px rgba(108,92,231,.45)}
 .btn-outline{padding:15px 36px;border-radius:var(--radius-sm);background:var(--surface);color:var(--p);font-size:16px;font-weight:600;border:2px solid var(--border);cursor:pointer;transition:.25s}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
@@ -101,7 +101,7 @@ td.hl-col{background:rgba(108,92,231,.03)}
 .steps::before{content:'';position:absolute;top:40px;left:12%;right:12%;height:2px;background:var(--border);z-index:0}
 @media(max-width:700px){.steps::before{display:none}}
 .step{text-align:center;padding:0 16px;position:relative;z-index:1}
-.step-num{width:48px;height:48px;border-radius:50%;background:var(--grad);color:#fff;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 16px rgba(108,92,231,.3)}
+.step-num{width:48px;height:48px;border-radius:50%;background:var(--btn-grad);color:#fff;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 16px rgba(108,92,231,.3)}
 .step h3{font-size:15px;font-weight:700;margin-bottom:6px}
 .step p{font-size:13px;color:var(--p2);line-height:1.55}
 /* FAQ */
@@ -121,7 +121,7 @@ td.hl-col{background:rgba(108,92,231,.03)}
 @media(max-width:600px){.pricing-cards{grid-template-columns:1fr}}
 .plan-card{background:var(--bg);border:2px solid var(--border);border-radius:var(--radius);padding:32px 24px;text-align:center;position:relative;transition:.25s}
 .plan-card.featured{border-color:var(--accent);box-shadow:0 0 0 4px rgba(108,92,231,.08);background:var(--surface)}
-.plan-card.featured::before{content:'Most Popular';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;font-size:12px;font-weight:700;padding:3px 14px;border-radius:20px;white-space:nowrap}
+.plan-card.featured::before{content:'Most Popular';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--btn-grad);color:#fff;font-size:12px;font-weight:700;padding:3px 14px;border-radius:20px;white-space:nowrap}
 .plan-name{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
 .plan-price{font-size:46px;font-weight:900;color:var(--p);line-height:1}
 .plan-price sub{font-size:18px;font-weight:500;color:var(--muted)}
@@ -130,7 +130,7 @@ td.hl-col{background:rgba(108,92,231,.03)}
 .plan-feats li{font-size:13px;color:var(--p2);display:flex;gap:9px}
 .plan-feats li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
 .btn-plan{width:100%;padding:13px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;border:none;transition:.25s}
-.btn-plan-primary{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(108,92,231,.3)}
+.btn-plan-primary{background:var(--btn-grad);color:#fff;box-shadow:0 4px 16px rgba(108,92,231,.3)}
 .btn-plan-primary:hover{opacity:.9;transform:translateY(-1px)}
 .btn-plan-secondary{background:var(--bg);color:var(--p2);border:2px solid var(--border)}
 .btn-plan-secondary:hover{border-color:var(--accent);color:var(--accent)}
@@ -174,7 +174,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
 <section class="hero">
   <div class="hero-badge">✦ The #1 AI Etsy SEO Optimizer · 5 Powerful Tools in One</div>
   <h1>Stop Guessing.<br>Start <span>Outranking.</span></h1>
-  <p class="hero-sub">Listora combines real keyword intelligence with AI copywriting to generate Etsy listings that actually rank — and convert visitors into buyers.</p>
+  <p class="hero-sub">Listora combines real keyword intelligence with AI copywriting to generate Etsy listings that actually rank and convert visitors into buyers.</p>
   <div class="hero-btns">
     <button class="btn-primary" onclick="window.location.href='/'">Start Free — No Credit Card</button>
     <button class="btn-outline" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">See How We Compare</button>
@@ -201,7 +201,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
 <section class="ps-section">
   <div class="ps-inner">
     <h2 class="ps-title">Why Most Etsy Sellers Struggle to Rank</h2>
-    <p class="ps-sub">You're working hard — but without the right SEO, buyers can't find you</p>
+    <p class="ps-sub">You're working hard, but without the right SEO, buyers can't find you</p>
     <div class="ps-grid">
       <div class="ps-card problem">
         <div class="ps-card-title">😤 The Problem</div>
@@ -209,7 +209,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
           <li><span>❌</span>Writing listings manually takes hours and still doesn't rank</li>
           <li><span>❌</span>Keyword tools give you data but don't tell you what to write</li>
           <li><span>❌</span>Competitors with better SEO dominate the first page</li>
-          <li><span>❌</span>Tags that feel right are often wrong — costing you traffic</li>
+          <li><span>❌</span>Tags that feel right are often wrong, costing you traffic</li>
           <li><span>❌</span>No time to optimize 50+ listings across your shop</li>
         </ul>
       </div>
@@ -217,7 +217,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
         <div class="ps-card-title" style="color:var(--teal)">✅ The Listora Solution</div>
         <ul class="ps-items">
           <li><span style="color:var(--teal)">✓</span>AI writes fully optimized listings in under 60 seconds</li>
-          <li><span style="color:var(--teal)">✓</span>Keyword intelligence + AI copy — data AND writing in one</li>
+          <li><span style="color:var(--teal)">✓</span>Keyword intelligence + AI copy: data AND writing in one</li>
           <li><span style="color:var(--teal)">✓</span>Competitor analysis shows exactly how to outrank them</li>
           <li><span style="color:var(--teal)">✓</span>Every tag validated for relevance and searchability</li>
           <li><span style="color:var(--teal)">✓</span>Bulk optimizer handles 20 listings simultaneously</li>
@@ -230,12 +230,12 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
 <!-- FEATURES -->
 <section class="features-section" id="features">
   <h2 class="section-title">Everything You Need to Dominate Etsy Search</h2>
-  <p class="section-sub">5 powerful tools working together — keyword research to bulk generation</p>
+  <p class="section-sub">5 powerful tools working together: keyword research to bulk generation</p>
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">✦</div>
       <div class="feature-title">AI Listing Generator</div>
-      <div class="feature-desc">Enter your product details and get 3 title variants, a 300+ word SEO description, and 13 optimized tags — all engineered to rank and convert.</div>
+      <div class="feature-desc">Enter your product details and get 3 title variants, a 300+ word SEO description, and 13 optimized tags, all engineered to rank and convert.</div>
       <div class="feature-badge">3 Title Variants</div>
     </div>
     <div class="feature-card">
@@ -259,7 +259,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
     <div class="feature-card">
       <div class="feature-icon">⚡</div>
       <div class="feature-title">Bulk Optimizer</div>
-      <div class="feature-desc">Optimize up to 20 listings at once. Real-time progress tracking, expandable results, one-click copy — perfect for shops with large inventories.</div>
+      <div class="feature-desc">Optimize up to 20 listings at once. Real-time progress tracking, expandable results, one-click copy. Perfect for shops with large inventories.</div>
       <div class="feature-badge">Pro · 20 at Once</div>
     </div>
     <div class="feature-card">
@@ -310,7 +310,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
       <div class="step">
         <div class="step-num">1</div>
         <h3>Research Keywords</h3>
-        <p>Enter your niche and discover what buyers actually search for — with volume and competition data</p>
+        <p>Enter your niche and discover what buyers actually search for, with volume and competition data</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -366,7 +366,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
 <section class="pricing-section" id="pricing">
   <div class="pricing-inner">
     <h2 class="section-title">Simple, Honest Pricing</h2>
-    <p class="section-sub">Start free. Upgrade when you see results. Cancel anytime — no questions asked.</p>
+    <p class="section-sub">Start free. Upgrade when you see results. Cancel anytime. No questions asked.</p>
     <div class="pricing-cards">
       <div class="plan-card">
         <div class="plan-name">Starter</div>
@@ -410,11 +410,11 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How is Listora different from eRank or Marmalead? <span class="arrow">▶</span></div>
-      <div class="faq-a">eRank and Marmalead are primarily data tools — they show you keyword numbers but don't write anything. Listora is a complete listing creation tool: it researches keywords AND writes your titles, descriptions, and tags using that data. Plus, our Competitor Analysis and Bulk Optimizer features don't exist anywhere else at this price point.</div>
+      <div class="faq-a">eRank and Marmalead are primarily data tools: they show you keyword numbers but don't write anything. Listora is a complete listing creation tool: it researches keywords AND writes your titles, descriptions, and tags using that data. Plus, our Competitor Analysis and Bulk Optimizer features don't exist anywhere else at this price point.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Will Listora violate Etsy's terms of service? <span class="arrow">▶</span></div>
-      <div class="faq-a">No. Listora is an SEO research and writing tool. It doesn't interact with Etsy's platform, access your account, or automate any actions on Etsy. You copy the generated content and manually paste it into your listings — exactly like using any other writing tool. This is completely within Etsy's terms.</div>
+      <div class="faq-a">No. Listora is an SEO research and writing tool. It doesn't interact with Etsy's platform, access your account, or automate any actions on Etsy. You copy the generated content and manually paste it into your listings, just like any other writing tool. This is completely within Etsy's terms.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How fast will I see results? <span class="arrow">▶</span></div>
@@ -422,7 +422,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Can I cancel anytime? <span class="arrow">▶</span></div>
-      <div class="faq-a">Yes. Cancel anytime with no questions, no cancellation fees, and no penalty. If you cancel within 30 days, we'll give you a full refund — no questions asked.</div>
+      <div class="faq-a">Yes. Cancel anytime with no questions, no cancellation fees, and no penalty. If you cancel within 30 days, we'll give you a full refund. No questions asked.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Does the Bulk Optimizer work for large shops? <span class="arrow">▶</span></div>
@@ -435,7 +435,7 @@ footer{background:var(--p);padding:48px 24px 32px;color:rgba(255,255,255,.7)}
 <section class="cta-section">
   <div class="container">
     <h2>Ready to Rank #1 on Etsy?</h2>
-    <p>7 free uses — no credit card needed. See the difference in minutes.</p>
+    <p>7 free uses. No credit card needed. See the difference in minutes.</p>
     <button class="btn-cta-white" onclick="window.location.href='/'">Start Optimizing Free →</button>
   </div>
 </section>
